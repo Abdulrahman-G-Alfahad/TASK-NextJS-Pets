@@ -1,3 +1,4 @@
+"use client";
 import PetsList from "./components/PetsList";
 
 export default function Home() {
