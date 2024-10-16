@@ -4,7 +4,7 @@ import { useState } from "react";
 const btnStyle =
   "m-4 p-2 bg-palette-primary text-white rounded-sm font-primary font-semibold  hover:bg-palette-dark";
 
-function PetItem({ pet }) {
+function PetItem({ pet, handleAdopt }) {
   const [petImage, setPetImage] = useState(pet.image);
 
   function updatePetImage() {
@@ -34,7 +34,11 @@ function PetItem({ pet }) {
           <button type="button" className={btnStyle} onClick={updatePetImage}>
             Pet
           </button>
-          <button type="button" className={btnStyle}>
+          <button
+            type="button"
+            className={btnStyle}
+            onClick={() => handleAdopt(pet.id)}
+          >
             Adopt
           </button>
         </div>

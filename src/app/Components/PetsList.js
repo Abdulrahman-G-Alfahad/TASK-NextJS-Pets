@@ -4,13 +4,20 @@ import { useState } from "react";
 function PetsList({ pets }) {
   const [query, setQuery] = useState("");
   const [type, setType] = useState("");
+  const [adoptedPets, setAdoptedPets] = useState([]);
+
+  function handleAdopt(id) {
+    alert("You Have Adopted a Pet!!");
+    setAdoptedPets([...adoptedPets, id]);
+  }
 
   const petList = pets
     .filter((pet) => pet.type.includes(type))
     .filter((pet) =>
       pet.name.toLocaleLowerCase().includes(query.toLocaleLowerCase())
     )
-    .map((pet) => <PetItem pet={pet} key={pet.id} />);
+    .filter((pet) => !adoptedPets.includes(pet.id))
+    .map((pet) => <PetItem pet={pet} key={pet.id} handleAdopt={handleAdopt} />);
 
   function handleTextChange(event) {
     setQuery(event.target.value);
