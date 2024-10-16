@@ -1,8 +1,24 @@
-import pets from "../data/pets";
 import PetItem from "./PetItem";
+import { useState } from "react";
 
-function PetsList() {
-  const petList = pets.map((pet) => <PetItem pet={pet} key={pet.id} />);
+function PetsList({ pets }) {
+  const [query, setQuery] = useState("");
+  const [type, setType] = useState("");
+
+  const petList = pets
+    .filter((pet) => pet.type.includes(type))
+    .filter((pet) =>
+      pet.name.toLocaleLowerCase().includes(query.toLocaleLowerCase())
+    )
+    .map((pet) => <PetItem pet={pet} key={pet.id} />);
+
+  function handleTextChange(event) {
+    setQuery(event.target.value);
+  }
+
+  function handleSelectorChange(event) {
+    setType(event.target.value);
+  }
 
   return (
     <>
@@ -13,12 +29,14 @@ function PetsList() {
               type="search"
               placeholder="search"
               className="text-gray-900 form-input border border-gray-300 w-full rounded-sm focus:border-palette-light focus:ring-palette-light"
+              onChange={handleTextChange}
             />
           </div>
           <div className="flex flex-col items-start space-y-1 flex-grow-0">
             <select
               defaultValue={""}
               className="form-select border border-gray-300 rounded-sm w-full text-gray-900 focus:border-palette-light focus:ring-palette-light"
+              onChange={handleSelectorChange}
             >
               <option value="">All</option>
               <option value="Cat">Cat</option>
